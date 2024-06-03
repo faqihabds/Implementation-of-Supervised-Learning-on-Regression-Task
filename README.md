@@ -1,4 +1,4 @@
-# Data Analytics COVID-19 di Indonesia
+# Implementation of Supervised Learning on Regression Task
 Data Analytics COVID-19 di Indonesia dengan menggunakan menggunakan Excel dan Tableau.
 
 # About The Project
