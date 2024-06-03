@@ -1,66 +1,123 @@
 # Implementation of Supervised Learning on Regression Task
-Data Analytics COVID-19 di Indonesia dengan menggunakan menggunakan Excel dan Tableau.
+Implementasi supervised Learning pada tugas regresi.
 
 # About The Project
-Data Analytics COVID-19 di Indonesia adalah analisis data yang berfokus pada banyaknya jumlah terkena dan teratasi kasus COVID-19 di Indonesia, menggunakan Excel dan Tableu untuk memberikan wawasan dan pengambilan keputusan.
+Implementasi supervised Learning pada tugas regresi melibatkan pelatihan model untuk memprediksi nilai numerik kontinu berdasarkan data pelatihan yang diberi label, di mana setiap input dikaitkan dengan output target. Tujuannya adalah untuk mempelajari hubungan mendasar antara input dan output agar dapat membuat prediksi yang akurat pada data baru yang belum pernah dilihat sebelumnya.
 
 # Dataset 
-Dataset yang digunakan adalah dataset COVID-19 Indonesia Dataset yang dapat diakses melalui [Kaggle](https://www.kaggle.com/datasets/hendratno/covid19-indonesia).
+Data yang digunakan adalah Dataset ‘Range Queries Aggregates’
 
 ## Tentang Dataset
-
 ### Konteks
-Dataset COVID-19 di Indonesia dibuat untuk mengetahui berbagai faktor yang dapat dipertimbangkan dalam pengambilan keputusan terkait tingkat ketatnya kebijakan di setiap provinsi di Indonesia.
+Data set “Range Queries Aggregates” adalah kumpulan data yang mencakup tiga set beban kerja kueri rentang/radius dari distribusi Gaussian di atas dataset nyata. Setiap kueri dikaitkan dengan nilai skalar agregat (hitungan/jumlah/rata-rata).
 
 ### Konten
-Data dikompilasi berdasarkan deret waktu, baik pada tingkat negara (Indonesia), maupun pada tingkat provinsi. Jika diperlukan di provinsi tertentu, data juga mungkin disediakan pada tingkat kota/kabupaten.
+Dataset ‘Range Queries Aggregates’ berisi catatan dengan format: {`X-coordinate`,`Y-coordinate`, `X-range`, `Y-range`, `Count`, `SUM`, `AVG`}.
 
-Data demografis juga tersedia, serta perhitungan antara data demografis dan data pandemi COVID-19.
+### Jenis Kueri
+Dataset ini berisi tiga jenis kueri:
 
-### Pengakuan
-Terima kasih kepada mereka yang telah menyediakan data secara terbuka sehingga kami dapat mengompilasinya menjadi dataset di sini, yaitu: covid19.go.id, kemendagri.go.id, bps.go.id, dan bnpb-inacovid19.hub.arcgis.com
+1. Kueri Radius: Mereka mendefinisikan disk di atas ruang 2D dengan pusat `(X,Y)` dan radius `R` untuk menyelidiki jumlah insiden kejahatan, total penangkapan, dan rata-rata beat dari area disk (area spasial) yang didefinisikan oleh setiap kueri.
 
-# Data Cleaning
-Setelah mengimpor file CSV yang telah diunduh ke dalam Excel, langkah pertama dalam proses data cleaning adalah dalam proses data cleaning adalah menghapus kolom yang tidak relevan untuk analisis lebih lanjut. 
+2. Kueri Radius Count: Mereka mendefinisikan disk di atas ruang 2D dengan pusat `(X,Y)` dan radius `R` dan jumlah insiden kejahatan Count dari area disk (area spasial) yang didefinisikan oleh setiap kueri.
 
-Kolom-kolom yang dihapus termasuk `Location Level`, `City or Regency`, `Continent`, `Time Zone`, `Special Status`, `Total Regencies`, `Total Cities`, `Total Districts`, `Total Urban Villages`, `Total Rural Villages`, `Area (km2)`, `Population Density`, `Longitude`, `Latitude`, `New Cases per Million`, `Total Cases per Million`, `Growth Factor of New Cases`, dan `Growth Factor of New Deaths`. 
-
-Setelah itu, kolom `Date` dipisahkan menjadi tiga kolom terpisah yaitu `Date`, `Month`, dan `Year` untuk memudahkan analisis berdasarkan waktu. Kolom `DMY` ditambahkan untuk menyimpan kombinasi hari dan bulan dalam format `dd-mmm`. 
-
-Kolom yang dipertahankan dan dibersihkan termasuk `Date`, `Month`, `Year`, `DMY`, `Location ISO Code`, `Location`, `New Cases`, `New Deaths`, `New Recovered`, `New Active Cases`, `Total Cases`, `Total Deaths`, `Total Recovered`, `Total Active Cases`, `Province`, `Country`, `Island`, `Population`, `New Deaths per Million`, `Total Deaths per Million`, `Total Deaths per 100rb`, `Case Fatality Rate`, dan `Case Recovered Rate`. 
+3. Kueri Rentang Agregat: Mereka mendefinisikan persegi panjang di atas ruang 2D dengan koordinat/poin: `X +/- X-range` dan `Y +/- Y-range`. `Count`, `SUM`, dan `AVG` adalah jumlah insiden, total penangkapan, dan rata-rata beat dari area persegi panjang (area spasial) yang didefinisikan oleh setiap kueri.
 
 
-Hasil dari proses data cleaning dapat diakses di file Excel yang disimpan dalam repository dengan nama file [covid dataset.xlsx](covid%20dataset.xlsx). 
+### Atribut:
 
-File Excel ini berisi dataset COVID-19 Indonesia yang telah dibersihkan dan siap untuk digunakan dalam analisis lebih lanjut.
+`ID` = nomor seri kueri (opsional)
 
-# Visualisasi Data
-Visualisasi data dilakukan menggunakan Tableau Public. 
+`X-coordinate` = koordinat spasial x (float)
 
-Dashboard
-![Dashboard](dashboard_data_analyst_covid.png)
+`Y-coordinate` = koordinat spasial y (float)
 
-Total case terbanyak terjadi di DKI Jakarta dengan jumlah lebih dari 500 juta.
-![Dashboard](Total_case_terbanyak.png)
+`X-range` = rentang x spasial untuk kueri rentang (float)
 
-Total Death terbanyak terjadi di Jawa Timur dengan jumlah lebih dari 15 juta.
-![Dashboard](Total_Death_terbanyak.png)
+`Y-range` = rentang y spasial untuk kueri rentang (float)
 
-Dashboard visualisasi lengkap dapat dilihat di [Tableau Public - COVID-19 di Indonesia Dashboard](https://public.tableau.com/app/profile/muhammad.faqih.abdussalam/viz/Covid-19diIndonesia_17168070835390/Dashboard1).
+`Count` = jumlah insiden kejahatan di lingkaran 2D (kueri radius) atau persegi panjang (kueri rentang)
 
-## Analisis Data
-Dari data yang telah dianalisis, beberapa temuan menarik dapat diidentifikasi:
+`SUM` = total penangkapan di lingkaran 2D (kueri radius) atau persegi panjang (kueri rentang)
 
-- **Total Kasus Terbanyak**: DKI Jakarta menjadi provinsi dengan total kasus COVID-19 terbanyak, mencapai lebih dari 500 juta kasus.
-- **Total Kematian Terbanyak**: Jawa Timur memiliki jumlah kematian terbanyak akibat COVID-19, dengan lebih dari 15 juta kematian.
-- **Puncak Kasus Terkena dan Meninggal**: Puncak kasus terkena dan meninggal terbanyak terjadi pada tahun 2022.
-- Dari data yang telah dianalisis, terjadi penurunan kasus COVID-19 baik di DKI Jakarta maupun Jawa Timur pada tahun 2024. Meskipun demikian, perhatian terhadap pencegahan dan penanganan tetap diperlukan untuk mencegah lonjakan kasus di masa mendatang.
+`AVG` = rata-rata Beat di lingkaran 2D (kueri radius) atau persegi panjang (kueri rentang)
 
-## Keputusan yang Disarankan
-Berdasarkan penurunan kasus COVID-19, beberapa keputusan yang dapat disarankan adalah:
+# Metode
+Metode yang digunakan adalah Metode ANN
 
-1. **Pemeliharaan Protokol Kesehatan**: Meskipun kasus menurun, tetap diperlukan pemeliharaan protokol kesehatan untuk mencegah penyebaran virus.
-2. **Penguatan Sistem Kesehatan**: Pemerintah perlu memperkuat sistem kesehatan, terutama di DKI Jakarta dan Jawa Timur, untuk menghadapi potensi lonjakan kasus di masa mendatang.
-3. **Edukasi Masyarakat**: Edukasi dan sosialisasi mengenai pentingnya protokol kesehatan masih perlu ditingkatkan untuk memastikan kesadaran masyarakat tetap tinggi.
+## Berikut adalah ringkasan metode yang digunakan :
 
-Keputusan yang diambil harus tetap berdasarkan pada data aktual dan kajian yang mendalam, serta melibatkan partisipasi aktif dari berbagai pihak terkait.
+### Pemilihan Fitur
+Fitur independen yang dipilih adalah `X-coordinate`, `Y-coordinate`, `X-range`, `Y-range`, `Count`, dan `SUM`, sementara fitur dependen adalah `AVG`.
+
+### Pembagian Data 
+Data dibagi menjadi set pelatihan dan pengujian dengan proporsi 80:20.
+
+### Penyekalaan Fitur 
+Fitur disekala menggunakan StandardScaler sehingga mereka memiliki rata-rata 0 dan standar deviasi 1. Ini penting untuk beberapa algoritma pembelajaran mesin.
+
+### Pembangunan Model
+Didefinisikan tiga model Artificial Neural Network (ANN) dengan arsitektur yang berbeda. Model pertama memiliki satu lapisan tersembunyi dengan dropout, model kedua memiliki dua lapisan tersembunyi dengan dropout, dan model ketiga memiliki tiga lapisan tersembunyi dengan dropout untuk mencegah overfitting.
+
+### Pelatihan Model 
+Setiap model dilatih selama 100 epoch dengan ukuran batch 3125. Data pengujian juga digunakan sebagai data validasi selama pelatihan.
+
+### Evaluasi Model 
+Setiap model dievaluasi dengan menghitung `Mean Squared Error (MSE)`, `Root Mean Squared Error (RMSE)`, dan `R-squared (R^2)` pada data pengujian.
+
+### Prediksi 
+Setiap model digunakan untuk membuat prediksi pada data pengujian, dan kemudian prediksi tersebut dipetakan terhadap nilai sebenarnya.
+
+### Konversi R^2 ke Persentase 
+Nilai `R^2` untuk setiap model dikonversi menjadi persentase untuk interpretasi yang lebih mudah.
+
+### Plot Residual 
+Plot residual dibuat untuk setiap model. Residual adalah perbedaan antara nilai sebenarnya dan nilai yang diprediksi oleh model. Plot ini membantu dalam memahami sejauh mana kesalahan tersebar dan apakah ada pola tertentu dalam kesalahan tersebut.
+
+# Hasil dan Analisis
+Berdasarkan hasil evaluasi model, ketiga model Artificial Neural Network (ANN) yang dibangun memiliki kinerja yang sebanding. 
+
+## Hasil metrik evaluasi utama
+### Model 1:
+    Mean Squared Error (MSE): 0.6936
+    Root Mean Squared Error (RMSE): 0.8328
+    R-squared (RS): 0.3064
+
+### Model 2:
+    Mean Squared Error (MSE): 0.7024
+    Root Mean Squared Error (RMSE): 0.8381
+    R-squared (RS): 0.2976
+
+#### Model 3:
+    Mean Squared Error (MSE): 0.6744
+    Root Mean Squared Error (RMSE): 0.8212
+    R-squared (RS): 0.3256
+
+## Analisis 
+
+### Analisis Model
+
+#### Mean Squared Error (MSE)
+Model 3 memiliki MSE terendah, menunjukkan bahwa model tersebut memiliki tingkat error yang lebih rendah dalam memprediksi target dibandingkan dengan Model 1 dan Model 2.
+
+#### Root Mean Squared Error (RMSE)
+Model 3 juga memiliki RMSE terendah, menunjukkan bahwa model tersebut memiliki tingkat kesalahan prediksi yang lebih rendah.
+
+#### R-squared (RS)
+R-squared mengukur sejauh mana variasi dalam data target dapat dijelaskan oleh model. Model 3 memiliki nilai RS tertinggi, menunjukkan kemampuannya untuk menjelaskan variasi yang lebih besar dalam data target.
+    
+### Analisis Persentase
+
+#### Mean Squared Error (MSE)
+Model 3 memiliki MSE terendah, menunjukkan bahwa model tersebut memiliki tingkat error yang lebih rendah dalam memprediksi target dibandingkan dengan Model 1 dan Model 2.
+
+#### Root Mean Squared Error (RMSE)
+Model 3 juga memiliki RMSE terendah, menunjukkan bahwa model tersebut memiliki tingkat kesalahan prediksi yang lebih rendah.
+
+#### R-squared (RS)
+R-squared mengukur sejauh mana variasi dalam data target dapat dijelaskan oleh model. Model 3 memiliki nilai RS tertinggi, menunjukkan kemampuannya untuk menjelaskan variasi yang lebih besar dalam data target.
+
+# Kesimpulan
+Ketiga model ANN yang dibangun menunjukkan kinerja yang sebanding dalam memprediksi target. Namun, Model 3 menonjol dengan MSE dan RMSE terendah, serta R-squared tertinggi, menunjukkan kemampuannya untuk memberikan prediksi dengan tingkat akurasi yang lebih baik. Hal ini mengindikasikan bahwa Model 3 lebih efisien dalam menangkap hubungan antara variabel input dan output dibandingkan dengan Model 1 dan Model 2.
+
+Analisis metrik utama memperkuat keunggulan Model 3, dengan nilai MSE dan RMSE yang lebih rendah, menunjukkan bahwa hasil prediksinya lebih dekat dengan nilai sebenarnya. Selain itu, nilai R-squared yang lebih tinggi menunjukkan bahwa Model 3 mampu menjelaskan variasi yang lebih besar dalam data target. Analisis persentase juga mengonfirmasi bahwa Model 3 memiliki tingkat kesalahan yang lebih rendah dan kemampuan penjelasan yang lebih baik dibandingkan model lainnya, menjadikannya pilihan terbaik di antara ketiga model yang diuji.
