@@ -8,6 +8,7 @@ Implementasi supervised Learning pada tugas regresi melibatkan pelatihan model u
 Data yang digunakan adalah Dataset ‘Range Queries Aggregates’
 
 ## Tentang Dataset
+
 ### Konteks
 Data set “Range Queries Aggregates” adalah kumpulan data yang mencakup tiga set beban kerja kueri rentang/radius dari distribusi Gaussian di atas dataset nyata. Setiap kueri dikaitkan dengan nilai skalar agregat (hitungan/jumlah/rata-rata).
 
@@ -45,7 +46,7 @@ Dataset ini berisi tiga jenis kueri:
 # Metode
 Metode yang digunakan adalah Metode ANN
 
-## Berikut adalah ringkasan metode yang digunakan :
+## Ringkasan metode yang digunakan :
 
 ### Pemilihan Fitur
 Fitur independen yang dipilih adalah `X-coordinate`, `Y-coordinate`, `X-range`, `Y-range`, `Count`, dan `SUM`, sementara fitur dependen adalah `AVG`.
